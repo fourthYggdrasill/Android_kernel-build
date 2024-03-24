@@ -118,3 +118,15 @@ jobs:
         with:
           name: ${{ steps.init_config.outputs.processed_name }} KernelSU
           path: ./new-boot.img
+
+          
+      - name: Upload DTBO image
+        uses: actions/upload-artifact@main
+        with:
+          name: DTBO-IMS
+          path: kernel-source/out/arch/arm64/boot/*
+
+          
+
+        
+      
