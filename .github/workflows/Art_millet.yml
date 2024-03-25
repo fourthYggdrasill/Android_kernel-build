@@ -65,7 +65,6 @@ jobs:
         run: |
           git clone --depth=1 -b ${{ inputs.kernel_tag }} ${{ inputs.git_url }} kernel-source
           git clone https://github.com/tiann/KernelSU kernel-source/KernelSU
-          git clone https://github.com/osm0sis/AnyKernel3 kernel-source/AnyKernel3
           sed -i 's/do.devicecheck=1/do.devicecheck=0/g' kernel-source/AnyKernel3/anykernel.sh
           sed -i 's!block=/dev/block/platform/omap/omap_hsmmc.0/by-name/boot;!block=auto;!g' kernel-source/AnyKernel3/anykernel.sh
           sed -i 's/is_slot_device=0;/is_slot_device=auto;/g' kernel-source/AnyKernel3/anykernel.sh
