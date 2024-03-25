@@ -65,6 +65,10 @@ jobs:
         run: |
           git clone --depth=1 -b ${{ inputs.kernel_tag }} ${{ inputs.git_url }} kernel-source
           git clone https://github.com/tiann/KernelSU kernel-source/KernelSU
+          git clone https://github.com/osm0sis/AnyKernel3 kernel-source/AnyKernel3
+          sed -i 's/do.devicecheck=1/do.devicecheck=0/g' kernel-source/AnyKernel3/anykernel.sh
+          sed -i 's!block=/dev/block/platform/omap/omap_hsmmc.0/by-name/boot;!block=auto;!g' kernel-source/AnyKernel3/anykernel.sh
+          sed -i 's/is_slot_device=0;/is_slot_device=auto;/g' kernel-source/AnyKernel3/anykernel.sh
           cd kernel-source 
           #./KernelSU/main/kernel/setup.sh main
           ./KernelSU/kernel/setup.sh main
@@ -84,7 +88,10 @@ jobs:
           chmod +x ./magiskboot
           unzip boot.zip
           cp -rf kernel-source/out/arch/arm64/boot/Image ./Image
+          cp -rf kernel-source/out/arch/arm64/boot/Image kernel-source/AnyKernel3/Image
           cp -rf kernel-source/out/arch/arm64/boot/dtbo.img ./dtbo.img
+          cp -rf kernel-source/out/arch/arm64/boot/dtbo.img kernel-source/AnyKernel3/dtbo.img
+          rm -rf kernel-source/AnyKernel3/.git* kernel-source/AnyKernel3/README.md
           ./magiskboot unpack boot.img
           rm -rf kernel
           mv Image kernel
@@ -105,8 +112,8 @@ jobs:
           path: ./Art_millet.zip
 
           
-      - name: Upload DTBO
+      - name: Upload AnyKernel3
         uses: actions/upload-artifact@v4
         with:
-          name: dtbo_${{ inputs.config_name }} Art_millet
-          path: ./dtbo.img
+          name: anykernel3_${{ inputs.config_name }} Art_millet
+          path: kernel-source/AnyKernel3/*
