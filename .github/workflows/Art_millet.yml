@@ -79,22 +79,6 @@ jobs:
 
 
 
-      - name: Make Anykernel3
-        run: |
-          git clone https://github.com/osm0sis/AnyKernel3 --depth=1 kernel-source/AnyKernel3
-          sed -i 's/do.devicecheck=1/do.devicecheck=0/g' ./AnyKernel3/anykernel.sh
-          sed -i 's!block=/dev/block/platform/omap/omap_hsmmc.0/by-name/boot;!block=auto;!g' ./AnyKernel3/anykernel.sh
-          sed -i 's/is_slot_device=0;/is_slot_device=auto;/g' ./AnyKernel3/anykernel.sh
-          cp android-kernel/out/arch/arm64/boot/Image ./AnyKernel3/
-          cp android-kernel/out/arch/arm64/boot/dtbo.img ./AnyKernel3/
-          rm -rf AnyKernel3/.git* kernel-source/AnyKernel3/README.md
-
-      - name: Upload AnyKernel3
-        uses: actions/upload-artifact@v4
-        with:
-          name: AnyKernel3${{ inputs.config_name }}-Art_millet
-          path: ./AnyKernel3/*
-
       - name: Patch Boot
         run: |
           chmod +x ./magiskboot
@@ -119,3 +103,10 @@ jobs:
         with:
           name: ${{ inputs.config_name }} Art_millet
           path: ./Art_millet.zip
+
+          
+      - name: Upload DTBO
+        uses: actions/upload-artifact@v4
+        with:
+          name: dtbo_${{ inputs.config_name }} Art_millet
+          path: ./dtbo.img
