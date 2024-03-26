@@ -70,7 +70,7 @@ jobs:
           sed -i 's/is_slot_device=0;/is_slot_device=auto;/g' kernel-source/AnyKernel3/anykernel.sh
           cd kernel-source 
           #./KernelSU/main/kernel/setup.sh main
-          ./KernelSU/kernel/setup.sh main
+          ./KernelSU/kernel/setup.sh drop_nongki
 
       - name: Make
         run: |
