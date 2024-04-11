@@ -104,9 +104,12 @@ jobs:
         make -j$(nproc --all) O=out ARCH=arm64 CC=clang ${{ env.KERNEL_DEFCONFIG }}
 
         scripts/config --file out/.config \
-          -d LTO_CLANG \
-          -e COMPAT_VDSO \
+          -e THINLTO \
+          -e LTO_CLANG \
+          -d CONFIG_CFI_CLANG \
+          -d CFI_PERMISSIVE \
           -d CFI_CLANG \
+          -e COMPAT_VDSO \
           -e SHADOW_CALL_STACK \
           -e SHADOW_CALL_STACK_VMAP \
           -e RELR
