@@ -124,11 +124,15 @@ jobs:
         cd kernel-source
         cp out/arch/arm64/boot/Image AnyKernel3
         # cp out/arch/arm64/boot/dtbo.img AnyKernel3
-        cd AnyKernel3
-        zip -r9 "../${{ env.DEVICE }}-${{ env.BUILD_TIME }}" * -x '*.git*' README.md -x 'modules/*' -x 'patch/*' -x 'ramdisk/*' >> /dev/null
-
+       
     - name: Upload Kernel
       uses: actions/upload-artifact@v4
       with:
         name: Pack-${{ env.BUILD_TIME }}
-        path: kernel-source/*.zip
+        path: 
+          kernel-source/AnyKernel3/
+          !kernel-source/AnyKernel3/*.git*
+          !kernel-source/AnyKernel3/patch
+          !kernel-source/AnyKernel3/modules
+          !kernel-source/AnyKernel3/ramdisk
+        compression-level: 9
