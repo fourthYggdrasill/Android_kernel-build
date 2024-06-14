@@ -89,7 +89,7 @@ jobs:
         # echo "ENABLE_KERNELSU=-KernelSU" >> $GITHUB_ENV
         # if [ ${{ env.ENABLE_KERNELSU_DEBUG }} = true ]; then
          # echo "CONFIG_KSU_DEBUG=y" >> arch/arm64/configs/${{ env.KERNEL_DEFCONFIG }}
-        fi
+        # fi
 
     - name: Build Kernel
       run: |
