@@ -17,7 +17,7 @@ on:
         description: '内核仓库地址'
         required: false
         type: string
-        default: 'https://github.com/fourthYggdrasill/InfiniR_kernel_alioth.git'
+        default: 'https://github.com/raystef66/InfiniR_kernel_alioth.git'
       clang_url:
         description: '编译器下载地址'
         required: false
@@ -64,7 +64,7 @@ jobs:
       - name: Clone Kernel
         run: |
           git clone --depth=1 -b ${{ inputs.kernel_tag }} ${{ inputs.git_url }} kernel-source
-          git clone https://github.com/tiann/KernelSU kernel-source/KernelSU
+          git clone https://github.com/fourthYggdrasill/KernelSU kernel-source/KernelSU
           sed -i 's/do.devicecheck=1/do.devicecheck=0/g' kernel-source/AnyKernel3/anykernel.sh
           sed -i 's!block=/dev/block/platform/omap/omap_hsmmc.0/by-name/boot;!block=auto;!g' kernel-source/AnyKernel3/anykernel.sh
           sed -i 's/is_slot_device=0;/is_slot_device=auto;/g' kernel-source/AnyKernel3/anykernel.sh
@@ -84,31 +84,16 @@ jobs:
 
       - name: Patch Boot
         run: |
-          chmod +x ./magiskboot
-          unzip boot.zip
-          cp -rf kernel-source/out/arch/arm64/boot/Image ./Image
           cp -rf kernel-source/out/arch/arm64/boot/Image kernel-source/AnyKernel3/Image
-          cp -rf kernel-source/out/arch/arm64/boot/dtbo.img ./dtbo.img
           #cp -rf kernel-source/out/arch/arm64/boot/dtbo.img kernel-source/AnyKernel3/dtbo.img
           rm -rf kernel-source/AnyKernel3/.git* kernel-source/AnyKernel3/README.md
-          ./magiskboot unpack boot.img
-          rm -rf kernel
-          mv Image kernel
-          ./magiskboot repack boot.img
-          rm -rf ramdisk.cpio boot.img
-          mv kernel Image
+          # ./magiskboot unpack boot.img
+          # rm -rf kernel
+          # mv Image kernel
+          # ./magiskboot repack boot.img
+          # rm -rf ramdisk.cpio boot.img
+          # mv kernel Image
 
-
-
-      - name: Zip
-        run: |
-          zip -r -9 -q -o Art_millet.zip new-boot.img Image
-
-      - name: Kernel REL
-        uses: actions/upload-artifact@main
-        with:
-          name: ${{ inputs.config_name }} Art_millet
-          path: ./Art_millet.zip
 
           
       - name: Upload AnyKernel3
