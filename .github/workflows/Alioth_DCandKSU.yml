@@ -129,7 +129,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: Pack-${{ env.BUILD_TIME }}
-        path: 
+        path: |
           kernel-source/AnyKernel3/
           !kernel-source/AnyKernel3/*.git*
           !kernel-source/AnyKernel3/patch
