@@ -6,7 +6,7 @@ on:
       KERNEL_SOURCE:
         description: 'Kernel Source'
         required: true
-        default: 'Death8023/kernel_xiaomi_sm8250_old.git'
+        default: 'fourthYggdrasill/kernel_xiaomi_sm8250_old.git'
       KERNEL_SOURCE_BRANCH:
         description: 'Branch'
         required: true
@@ -95,8 +95,8 @@ jobs:
       run: |
         cd kernel-source
         export PATH=$GITHUB_WORKSPACE/clang/bin:$PATH
-        export KBUILD_BUILD_HOST=Art
-        export KBUILD_BUILD_USER=Death
+        # export KBUILD_BUILD_HOST=Art
+        # export KBUILD_BUILD_USER=Death
         make -j$(nproc --all) O=out ARCH=arm64 CC=clang ${{ env.KERNEL_DEFCONFIG }}
 
         scripts/config --file out/.config \
