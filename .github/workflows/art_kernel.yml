@@ -10,7 +10,7 @@ on:
       KERNEL_SOURCE_BRANCH:
         description: 'Branch'
         required: true
-        default: 'aries'
+        default: 'main'
       KERNEL_DEFCONFIG:
         description: 'Defconfig'
         required: true
@@ -121,8 +121,15 @@ jobs:
         KERNEL_NAME=$(grep "CONFIG_LOCALVERSION=" arch/arm64/configs/vendor/xiaomi/sm8250-common.config | cut -d'-' -f2 | tr -d '"')
         sed -i "s/Art_millet/$KERNEL_NAME/g" ./AnyKernel3/anykernel.sh
         cp out/arch/arm64/boot/Image AnyKernel3
-        cp out/arch/arm64/boot/dtbo.img AnyKernel3
-        cp out/arch/arm64/boot/dtb AnyKernel3
+        # cp out/arch/arm64/boot/dtbo.img AnyKernel3
+        # cp out/arch/arm64/boot/dtb AnyKernel3
+
+    - name: Upload Boot
+      uses: actions/upload-artifact@v4
+      with:
+        name: Art_old-kernel-Boot
+        path: |
+          kernel-source/out/arch/arm64/boot/*
 
     - name: Upload Kernel
       uses: actions/upload-artifact@v4
