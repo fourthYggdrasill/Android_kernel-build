@@ -81,6 +81,7 @@ jobs:
     - name: Setup KernelSU
       if: env.ENABLE_KERNELSU == 'true'
       run: |
+        rm -rf kernel-source/KernelSU
         git clone https://github.com/fourthYggdrasill/KernelSU kernel-source/KernelSU
         cd kernel-source
         # git apply AnyKernel3/patch/KernelSU.patch
